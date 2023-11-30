@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAshboard</title>
+</head>
+<body>
+    
+
+    <p>Welcome to the dashboard</p>
+
+    <div id="disp"></div>
+
+    <button id="signOutBtn">sign out</button>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getAuth, signOut, onAuthStateChanged  } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        
+
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDALJC3E9xKOmITQSyxRqHfBMPk5zaBIR4",
+          authDomain: "test-f69b3.firebaseapp.com",
+          projectId: "test-f69b3",
+          storageBucket: "test-f69b3.appspot.com",
+          messagingSenderId: "604091874723",
+          appId: "1:604091874723:web:04593a749a1fefac13ee16"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        onAuthStateChanged(auth, (user)=> {
+            if (user) {
+                disp.innerHTML = `<p>Welcome ${user.displayName}</p>`
+            } else {
+                window.location.href = 'index.html'
+            }
+        })
+    
+        document.getElementById('signOutBtn').addEventListener('click', ()=> {
+            signOut(auth).then(() => {
+                alert('signout successful')
+            }).catch((error) =>{
+                console.log(error);
+            })
+        })
+    </script>
+
+</body>
+</html>

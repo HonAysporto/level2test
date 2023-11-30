@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+
+<body>
+
+  
+    <main>
+        <div class="form">
+            <p class="title">Register </p>
+            <p class="message">Signup now and get full access to our app. </p>
+            <div class="flex">
+                <label>
+                    <input   type="text" class="input">
+                    <span>Firstname</span>
+                </label>
+    
+                <label>
+                    <input  type="text" class="input">
+                    <span>Lastname</span>
+                </label>
+            </div>
+    
+            <label>
+                <input  id="emaill" type="email" class="input">
+                <span>Email</span>
+            </label>
+    
+            <label>
+                <input required=""  id="passwordd" type="password" class="input">
+                <span>Password</span>
+            </label>
+            <label>
+                <input required=""  type="password" class="input">
+                <span>Confirm password</span>
+            </label>
+            <button id="submitBtn">Submit</button>
+            <p id="signinBTN" class="signin">Already have an acount ? <a href="#">Signin</a> </p>
+        </div>
+    </main>
+   
+
+
+    <script type="module">
+        
+       
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDALJC3E9xKOmITQSyxRqHfBMPk5zaBIR4",
+            authDomain: "test-f69b3.firebaseapp.com",
+            projectId: "test-f69b3",
+            storageBucket: "test-f69b3.appspot.com",
+            messagingSenderId: "604091874723",
+            appId: "1:604091874723:web:04593a749a1fefac13ee16"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const email = document.getElementById('emaill').value
+        const password = document.getElementById('passwordd').value
+        // const email = 'ayomideoluwafemi2019@gmail.com'
+        // const password = 'gdgdgdgdg'
+
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            // alert(email.value)
+            createUserWithEmailAndPassword(auth, email, password).then((usercred) => {
+                const user = usercred.user;
+                window.location.href = 'dashboard.html';
+            }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error('Error creating user:', errorCode, errorMessage);
+
+                // Handle specific error cases
+                if (errorCode === 'auth/weak-password') {
+                    alert('The password is too weak. Please choose a stronger password.');
+                } else {
+                    alert(errorMessage);
+                }
+            });
+        })
+
+        // sign in redirect
+
+        document.getElementById('signinBTN').addEventListener('click', ()=> {
+            window.location.href = 'index.html'
+        })
+
+
+    </script>
+</body>
+
+</html>
